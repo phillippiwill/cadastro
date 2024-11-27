@@ -14,40 +14,40 @@ from django.conf import settings
 
 
 
-#def loginPage(request):
-#    page = 'login'
-#
-#
-#    if request.user.is_authenticated: 
-#        return redirect('home')
-#
-#
-#    if request.method == 'POST':
-#        username = request.POST.get('username').lower()
-#        password = request.POST.get('password')
-#
-#        try:
-#            user = User.objects.get(username=username)
-#       except:
-#           messages.error(request, 'User does not exist')
-#
-#        user = authenticate(request, username=username, password=password)
-#
-#        if user is not None:
-#            login(request, user)
-#            return redirect('home')
-#        else:
-#            messages.error(request, 'Username OR password does not exist')
-#    
-#    context = {'page': page}
-#    return render(request, 'base/login.html', context)
+def loginPage(request):
+    page = 'login'
 
 
-#def logoutUser(request):
-#    logout(request)
-#    return redirect('login')
+    if request.user.is_authenticated: 
+        return redirect('home')
 
-#@login_required(login_url= 'login')
+
+    if request.method == 'POST':
+        username = request.POST.get('username').lower()
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'User does not exist')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Username OR password does not exist')
+    
+    context = {'page': page}
+    return render(request, 'base/login.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+@login_required(login_url= 'login')
 def homePage(request):
     estados = Estado.objects.all().order_by('nome')  # Busca todos os estados do banco de dados
     partidos = Partido.objects.all().order_by('nome')
@@ -100,7 +100,7 @@ def get_municipios(request, estado_id):
     # Resposta padrão para o formato 'home'
     return JsonResponse({'municipios': list(municipios)}, safe=False)
 
-#@login_required(login_url='login')
+@login_required(login_url='login')
 def dashPage(request):
     cargo = request.GET.get('cargo')
     estado = request.GET.get('estado')
@@ -134,7 +134,7 @@ def dashPage(request):
     return render(request, 'base/dash.html', context)
 
 
-#@login_required(login_url='login')
+@login_required(login_url='login')
 def editar_contato(request, contato_id):
     # Busca o contato pelo ID
     contato = get_object_or_404(Contato, id=contato_id)
@@ -217,7 +217,7 @@ def editar_contato(request, contato_id):
     return render(request, 'base/editar_contato.html', context)
 
 
-#@login_required(login_url='login')
+@login_required(login_url='login')
 def edit_profile(request, contato_id):
     # Busca o contato pelo ID
     contato = get_object_or_404(Contato, id=contato_id)
@@ -279,7 +279,7 @@ def edit_profile(request, contato_id):
 def home(request):
     return HttpResponse("Home page")
 
-#@login_required(login_url='login')
+@login_required(login_url='login')
 def exportar_estados_csv(request):
     # Configura a resposta como um arquivo CSV
     response = HttpResponse(content_type='text/csv')
@@ -314,7 +314,7 @@ def exportar_municipios_csv(request):
 
 
 
-#@login_required(login_url='login')
+@login_required(login_url='login')
 def exportar_cargos_csv(request):
     # Configura a resposta como um arquivo CSV
     response = HttpResponse(content_type='text/csv')
@@ -330,7 +330,7 @@ def exportar_cargos_csv(request):
 
     return response
 
-#@login_required(login_url='login')
+@login_required(login_url='login')
 def exportar_partidos_csv(request):
     # Configura a resposta como um arquivo CSV
     response = HttpResponse(content_type='text/csv')

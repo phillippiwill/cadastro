@@ -1,5 +1,5 @@
 from django.db import models # type: ignore
-#from multi_email_field.fields import MultiEmailField
+from multi_email_field.fields import MultiEmailField
 
 
 class Estado(models.Model):
